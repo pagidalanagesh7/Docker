@@ -1,4 +1,3 @@
-````markdown
 # 🐳 Docker Day 02 - Docker Commands Cheat Sheet
 
 This document contains the most commonly used Docker commands for beginners.
@@ -246,4 +245,3 @@ By learning these commands, you can:
 - Execute commands inside a running container
 
 Happy Learning! 🐳🚀
-````
