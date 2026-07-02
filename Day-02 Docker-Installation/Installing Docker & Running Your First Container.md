@@ -1,4 +1,3 @@
-````markdown
 # 🐳 Docker Day 02 – Installing Docker & Running Your First Container
 
 Welcome to **Day 02** of my **Docker in 10 Days** learning series.
@@ -355,4 +354,3 @@ Stay tuned as we explore Docker Images, Layers, Image Management, and Docker Hub
 ---
 
 ⭐ **If you found these notes helpful, don't forget to Star this repository and follow my Docker in 10 Days journey!**
-````
