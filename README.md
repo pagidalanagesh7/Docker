@@ -54,4 +54,41 @@ Install Docker, verify the setup, and run your first container successfully.
 
 ---
 
-⭐ Stay tuned for **Day 03 – Docker Images, Containers & Docker Hub** 🚀
+# 🐳 Docker Day 03 – Docker Images & Image Lifecycle
+
+Welcome to **Day 03** of my Docker Learning Series.
+
+---
+
+## 📚 Topics Covered
+
+- What is a Docker Image?
+- Why Docker Images?
+- Docker Image Layers
+- Docker Image Lifecycle
+- Docker Hub
+- Docker Image vs Docker Container
+- Image Tags & Image IDs
+- Public vs Private Registries
+- Docker Image Best Practices
+
+---
+
+## 📂 Files
+
+- **README.md** – Day 03 Overview
+- **theory.md** – Complete Theory Notes
+- **commands.md** – Essential Docker Image Commands
+- **examples.md** – Practical Examples
+- **Dockerfile** – Sample Dockerfile
+- **.dockerignore** – Ignore Unnecessary Files During Build
+
+---
+
+## 🎯 Goal
+
+Understand Docker Images, their lifecycle, layers, and how to efficiently build, manage, and share images using Docker Hub.
+
+---
+
+⭐ Happy Learning! 🐳
