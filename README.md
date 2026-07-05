@@ -127,3 +127,51 @@ tar
 ## 🚀 Outcome
 
 Built a solid understanding of Docker storage, data persistence, backup & restore strategies, and production-ready storage practices.
+
+---
+# 🐳 Docker Learning Series – Day 5: Docker Networking
+
+Welcome to **Day 5** of the Docker Learning Series!
+
+In this module, you'll learn how Docker enables communication between containers, the host machine, and external networks. You'll explore Docker network drivers, port mapping, built-in DNS, and networking best practices used in real-world DevOps environments.
+
+## 📚 Topics Covered
+
+- 🌐 What is Docker Networking?
+- 🌉 Bridge Network
+- 🚀 Host Network
+- 🔒 None Network
+- 🔗 Overlay Network
+- 🌐 Macvlan Network
+- 🚪 Port Mapping (`-p`)
+- 🛰 Docker DNS & Service Discovery
+- 💻 Essential Docker Network Commands
+- ✅ Production Best Practices
+- 🎯 Interview Questions & Answers
+
+## 📂 Repository Structure
+
+```
+Day-05-Docker-Networking/
+│── README.md
+│── theory.md
+│── commands.md
+│── examples.md
+│── interview-questions.md
+│── images/
+```
+
+## 🎯 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Understand Docker networking fundamentals
+- Differentiate between Bridge, Host, None, Overlay, and Macvlan networks
+- Expose container applications using Port Mapping
+- Configure container communication using Docker DNS
+- Manage Docker networks using CLI commands
+- Apply networking best practices in production environments
+
+---
+
+⭐ If you find this repository helpful, consider giving it a **Star** and following the series for more Docker and DevOps content.
