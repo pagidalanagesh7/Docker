@@ -91,4 +91,39 @@ Understand Docker Images, their lifecycle, layers, and how to efficiently build,
 
 ---
 
-⭐ Happy Learning! 🐳
+# 🐳 Docker Learning Series – Day 4
+
+## 📚 Topics Covered
+
+- 💾 Docker Volumes
+- 📂 Bind Mounts
+- ⚡ tmpfs Mounts
+- 🔄 Volume Lifecycle
+- 🛡️ Data Persistence
+- 💽 Backup & Restore Volumes
+- ✅ Production Storage Best Practices
+
+## 🎯 What I Learned
+
+- Difference between **Volumes**, **Bind Mounts**, and **tmpfs**
+- How Docker stores persistent data
+- When to use each storage type
+- Backing up and restoring Docker volumes
+- Storage best practices for production environments
+
+## 🛠️ Commands Practiced
+
+```bash
+docker volume create
+docker volume ls
+docker volume inspect
+docker volume rm
+docker run -v
+docker run --mount
+docker cp
+tar
+```
+
+## 🚀 Outcome
+
+Built a solid understanding of Docker storage, data persistence, backup & restore strategies, and production-ready storage practices.
