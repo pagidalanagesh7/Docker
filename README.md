@@ -153,13 +153,29 @@ In this module, you'll learn how Docker enables communication between containers
 
 ```
 Day-05-Docker-Networking/
-│── README.md
-│── theory.md
-│── commands.md
-│── examples.md
-│── interview-questions.md
-│── images/
+│
+├── README.md
+├── Docker Networking.md
+├── commands.md
+├── examples.md
+├── Dockerfile
+├── docker networking.png
+└── docker networking.pdf
 ```
+---
+
+## 📄 Repository Files
+
+| File | Description |
+|------|-------------|
+| 📘 Docker Networking.md | Complete theory with detailed explanations |
+| 💻 commands.md | Frequently used Docker networking commands |
+| 🚀 examples.md | Hands-on examples with command outputs |
+| 🐳 Dockerfile | Sample Dockerfile for networking demonstration |
+| 🖼 docker networking.png | High-resolution handwritten infographic |
+| 📄 docker networking.pdf | Printable PDF version |
+
+---
 
 ## 🎯 Learning Objectives
 
