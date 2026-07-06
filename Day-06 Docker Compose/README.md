@@ -1,74 +1,105 @@
-# 🐳 Docker Learning Series - Day 6
+
+# 🐳 Docker Learning Series – Day 6
 
 # Docker Compose
 
-> Learn how to manage multi-container applications using Docker Compose.
+> **Topics Covered:** Docker Compose • docker-compose.yml • Services • Multi-Container Applications • Networks • Volumes • Environment Variables • Scaling
 
-------------------------------------------------------------------------
+---
 
 # 📖 What is Docker Compose?
 
-Docker Compose is a tool used to define and manage **multi-container
-Docker applications** using a single `docker-compose.yml` file.
+Docker Compose is a tool used to define, configure, and manage **multi-container Docker applications** using a single YAML file called **docker-compose.yml**.
 
-Instead of running multiple `docker run` commands manually, Docker
-Compose lets you deploy an entire application stack with one command.
+Instead of manually creating containers, networks, volumes, and passing environment variables, Compose automates the entire application deployment.
 
-``` bash
-docker compose up
+```bash
+docker compose up -d
 ```
 
-------------------------------------------------------------------------
+This single command can start an entire application stack.
+
+---
 
 # Why Docker Compose?
 
-Modern applications usually contain multiple services:
+Modern applications are built using multiple services.
 
-``` text
+Example:
+
+```text
 Browser
    │
    ▼
-Frontend (Nginx)
+Nginx
    │
    ▼
 Backend API
    │
    ▼
-MySQL Database
+MySQL
    │
    ▼
-Redis Cache
+Redis
 ```
 
-Without Compose you must manually create:
+Without Compose you would manually:
 
--   Containers
--   Networks
--   Volumes
--   Environment Variables
--   Port mappings
+- Create each container
+- Create Docker network
+- Create volumes
+- Configure environment variables
+- Connect containers
 
-Docker Compose automates everything.
+Compose performs all of these automatically.
 
-------------------------------------------------------------------------
+---
 
-# Key Components
+# Docker Compose Workflow
 
-## docker-compose.yml
+```text
+Write docker-compose.yml
+        │
+        ▼
+docker compose up
+        │
+        ▼
+Build/Pull Images
+        │
+        ▼
+Create Network
+        │
+        ▼
+Create Volumes
+        │
+        ▼
+Start Containers
+        │
+        ▼
+Application Ready
+```
 
-The central configuration file describing:
+---
 
--   Services
--   Images
--   Ports
--   Volumes
--   Networks
--   Environment Variables
--   Dependencies
+# docker-compose.yml
+
+This file describes your complete application.
+
+It typically contains:
+
+- Services
+- Images
+- Build instructions
+- Ports
+- Networks
+- Volumes
+- Environment Variables
+- Health Checks
+- Dependencies
 
 Example:
 
-``` yaml
+```yaml
 version: "3.9"
 
 services:
@@ -78,13 +109,15 @@ services:
       - "80:80"
 ```
 
-------------------------------------------------------------------------
+---
 
-## Services
+# Services
 
-Each service represents one container.
+A **service** defines one container.
 
-``` yaml
+Example:
+
+```yaml
 services:
   frontend:
     image: nginx
@@ -94,29 +127,114 @@ services:
 
   database:
     image: mysql:8
+
+  redis:
+    image: redis:7
 ```
 
-------------------------------------------------------------------------
+Each service runs independently but communicates over the Compose network.
 
-## Networks
+### Real-Time Example
 
-Compose automatically creates an isolated network.
+E-commerce Application
 
-Containers communicate using service names.
+- frontend → React
+- backend → Spring Boot
+- database → MySQL
+- cache → Redis
+
+Each is defined as a separate service.
+
+---
+
+# Multi-Container Applications
+
+Most enterprise applications contain multiple containers.
+
+Example Architecture
+
+```text
+                 Internet
+                     │
+                     ▼
+               Nginx Reverse Proxy
+                     │
+          ┌──────────┴──────────┐
+          ▼                     ▼
+      Backend API          Background Worker
+              │
+      ┌───────┴────────┐
+      ▼                ▼
+   MySQL            Redis
+```
+
+### Why Multiple Containers?
+
+- Better scalability
+- Independent deployment
+- Easier maintenance
+- Fault isolation
+- Technology flexibility
+
+### Real Project Example
+
+Online Shopping Platform
+
+- Nginx
+- Spring Boot API
+- MySQL
+- Redis
+- RabbitMQ
+
+All started using one Compose file.
+
+---
+
+# Networks
+
+Compose automatically creates a bridge network.
+
+Containers communicate using **service names**.
 
 Example:
 
-    backend ----> database:3306
+```text
+backend → database:3306
+```
 
-instead of an IP address.
+instead of IP addresses.
 
-------------------------------------------------------------------------
+### Custom Network
 
-## Volumes
+```yaml
+networks:
+  app-network:
 
-Volumes provide persistent storage.
+services:
+  backend:
+    networks:
+      - app-network
 
-``` yaml
+  database:
+    networks:
+      - app-network
+```
+
+Benefits
+
+- Service discovery
+- Isolation
+- Secure communication
+
+---
+
+# Volumes
+
+Containers are temporary.
+
+Volumes keep data persistent.
+
+```yaml
 services:
   mysql:
     image: mysql:8
@@ -127,292 +245,270 @@ volumes:
   mysql-data:
 ```
 
-------------------------------------------------------------------------
+### Bind Mount
 
-## Bind Mount
-
-``` yaml
+```yaml
 volumes:
   - ./:/app
 ```
 
-Useful during development because local code changes instantly reflect
-inside the container.
+Best for development because code changes appear instantly inside the container.
 
-------------------------------------------------------------------------
+---
 
-## Environment Variables
+# Environment Variables
 
-``` yaml
+Instead of hardcoding values:
+
+```yaml
 environment:
   MYSQL_ROOT_PASSWORD: root123
-  MYSQL_DATABASE: appdb
 ```
 
-Using `.env`
+Use `.env`
 
-    MYSQL_PASSWORD=root123
-    MYSQL_DATABASE=appdb
+```
+MYSQL_PASSWORD=root123
+MYSQL_DATABASE=shopping
+```
 
-``` yaml
+```yaml
 environment:
   MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+  MYSQL_DATABASE: ${MYSQL_DATABASE}
 ```
 
-------------------------------------------------------------------------
+Benefits
 
-## depends_on
+- Cleaner configuration
+- Environment-specific values
+- Easy deployment
 
-``` yaml
+---
+
+# depends_on
+
+```yaml
 backend:
   depends_on:
     - database
 ```
 
-> Note: `depends_on` controls startup order only. It does not wait for
-> the database to become ready.
+**Important:** It controls startup order only. It does not guarantee the database is ready. Use **healthcheck** in production.
 
-------------------------------------------------------------------------
+---
 
-## Scaling
+# Scaling
 
-``` bash
+```bash
 docker compose up --scale backend=3
 ```
 
-Creates:
+Output
 
-    backend-1
-    backend-2
-    backend-3
+```text
+backend-1
+backend-2
+backend-3
+```
 
-------------------------------------------------------------------------
+Useful for:
+
+- Load testing
+- Background workers
+- High availability
+
+---
+
+# Complete Project Structure
+
+```text
+shopping-app/
+├── docker-compose.yml
+├── .env
+├── frontend/
+├── backend/
+├── nginx/
+└── database/
+```
+
+---
+
+# Complete Compose Example
+
+```yaml
+version: "3.9"
+
+services:
+  frontend:
+    image: nginx
+    ports:
+      - "80:80"
+
+  backend:
+    image: node:20
+    environment:
+      DB_HOST: database
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:7
+
+volumes:
+  mysql-data:
+```
+
+---
 
 # Common Commands
 
-``` bash
-docker compose up
+```bash
 docker compose up -d
 docker compose down
-docker compose restart
 docker compose ps
-docker compose logs
 docker compose logs -f
+docker compose restart
 docker compose exec backend bash
 docker compose build
 docker compose pull
 docker compose config
+docker compose up --scale backend=3
 ```
 
-------------------------------------------------------------------------
-
-# Real-Time Project Example
-
-An Online Shopping application:
-
-    Internet
-       │
-    Nginx
-       │
-    Node.js API
-       │
-    MySQL
-       │
-    Redis
-
-Compose automatically:
-
--   Creates containers
--   Creates a network
--   Mounts volumes
--   Injects environment variables
--   Starts all services
-
-Command:
-
-``` bash
-docker compose up -d
-```
-
-------------------------------------------------------------------------
+---
 
 # Sample Output
 
 ## docker compose ps
 
-``` text
-NAME                 STATUS      PORTS
-frontend             Up          80/tcp
-backend              Up          3000/tcp
-mysql                Up          3306/tcp
-redis                Up          6379/tcp
+```text
+NAME         STATUS    PORTS
+frontend     Up        80/tcp
+backend      Up        3000/tcp
+database     Up        3306/tcp
+redis        Up        6379/tcp
 ```
 
 ## docker compose logs
 
-``` text
-backend  | Connected to MySQL
-backend  | Listening on port 3000
-mysql    | Ready for connections
-nginx    | Started successfully
+```text
+backend | Connected to MySQL
+backend | Server started on port 3000
+database | Ready for connections
+redis | Ready to accept connections
 ```
 
-------------------------------------------------------------------------
+---
 
-# Common Errors
+# Common Troubleshooting
 
-## Port already allocated
+### Port already allocated
 
-    ERROR: Port is already allocated
+```text
+ERROR: Port is already allocated
+```
 
 Fix:
 
-``` bash
+```bash
 docker ps
 docker stop <container-id>
 ```
 
-------------------------------------------------------------------------
-
-## Connection refused
+### Connection refused
 
 Reason:
 
-Database isn't ready.
+Database is not ready.
 
-Fix:
+Solution
 
--   Use healthchecks
--   Retry connection
--   Don't rely only on depends_on
+- Use healthcheck
+- Retry connection
+- Don't rely only on depends_on
 
-------------------------------------------------------------------------
+### No such service
 
-## No such service
-
-``` bash
+```bash
 docker compose config
 ```
 
 Verify service names.
 
-------------------------------------------------------------------------
+---
 
 # Production Best Practices
 
--   Use `.env`
--   Never hardcode secrets
--   Use named volumes
--   Add health checks
--   Use restart policies
--   Pin image versions
--   Use Git
--   Separate development and production Compose files
+- Use `.env`
+- Never hardcode passwords
+- Use Docker Secrets in production
+- Use named volumes
+- Pin image versions
+- Add health checks
+- Keep separate development and production Compose files
+- Store Compose files in Git
+- Clean unused images and volumes
 
-------------------------------------------------------------------------
+---
 
-# Top 15 Interview Questions & Answers
+# Top 15 Interview Questions
 
-## 1. What is Docker Compose?
+1. What is Docker Compose?
+2. Difference between Docker and Docker Compose?
+3. What is docker-compose.yml?
+4. What is a service?
+5. What happens during `docker compose up`?
+6. How do containers communicate?
+7. What is depends_on?
+8. Difference between Volume and Bind Mount?
+9. Why use .env?
+10. Difference between `up`, `start`, `stop`, and `down`?
+11. How do you scale services?
+12. What is a healthcheck?
+13. How do you debug Compose applications?
+14. How would you deploy Compose in a Dev environment?
+15. What are Compose production best practices?
 
-A tool for defining and managing multi-container Docker applications
-using YAML.
+### Short Answers
 
-## 2. Difference between Docker and Docker Compose?
+- Compose manages multi-container applications.
+- Services define containers.
+- Networks provide service discovery.
+- Volumes persist data.
+- Environment variables externalize configuration.
+- Scaling creates multiple container replicas.
+- Health checks improve reliability.
+- Logs and `docker compose exec` are used for troubleshooting.
+- `.env` improves portability.
+- Production should use secrets, health checks, pinned versions, and Git.
 
-Docker manages single containers, while Compose manages complete
-multi-container applications.
-
-## 3. What is a service?
-
-A service defines how one container should run.
-
-## 4. What is docker-compose.yml?
-
-The configuration file that defines the entire application stack.
-
-## 5. What happens during `docker compose up`?
-
-Reads YAML → Creates network → Creates volumes → Pulls/builds images →
-Starts containers.
-
-## 6. What is depends_on?
-
-Controls startup order only.
-
-## 7. How do containers communicate?
-
-Using service names through the Compose network.
-
-## 8. Volume vs Bind Mount?
-
-Volumes are Docker-managed and persistent. Bind mounts map host
-directories.
-
-## 9. Purpose of .env?
-
-Keeps configuration outside the Compose file.
-
-## 10. How do you scale services?
-
-``` bash
-docker compose up --scale backend=3
-```
-
-## 11. Difference between up and start?
-
-`up` creates (if needed) and starts containers. `start` only starts
-existing stopped containers.
-
-## 12. Difference between stop and down?
-
-`stop` stops containers. `down` removes containers and networks.
-
-## 13. How do you debug Compose applications?
-
-Use:
-
-``` bash
-docker compose ps
-docker compose logs
-docker compose exec
-docker compose config
-```
-
-## 14. What are health checks?
-
-Health checks verify a container is actually ready to serve requests.
-
-## 15. What are Compose best practices?
-
--   Use .env
--   Use named volumes
--   Avoid latest tag
--   Use meaningful service names
--   Add health checks
--   Version control Compose files
-
-------------------------------------------------------------------------
+---
 
 # Summary
 
-You learned:
+By completing Day 6, you learned:
 
--   Docker Compose fundamentals
--   docker-compose.yml
--   Services
--   Networks
--   Volumes
--   Environment Variables
--   .env files
--   depends_on
--   Scaling
--   Commands
--   Real-world architecture
--   Production best practices
--   Troubleshooting
--   Top Interview Questions
+- ✅ Docker Compose
+- ✅ docker-compose.yml
+- ✅ Services
+- ✅ Multi-Container Applications
+- ✅ Networks
+- ✅ Volumes
+- ✅ Environment Variables
+- ✅ depends_on
+- ✅ Scaling
+- ✅ Complete Project Example
+- ✅ Sample Outputs
+- ✅ Troubleshooting
+- ✅ Production Best Practices
+- ✅ Top Interview Questions
 
-Docker Compose is an essential DevOps tool for building, running, and
-managing multi-container applications consistently across development,
-testing, and production environments.
+Docker Compose is one of the most important tools for DevOps Engineers because it simplifies local development, testing, CI/CD pipelines, and multi-container application management.
