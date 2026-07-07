@@ -44,4 +44,4 @@ Day-07-Dockerfile-Image-Optimization/
 - Day 08: Docker Compose Multi-Container Apps
 
 ---
-✍️ Part of the **100 Days of DevOps** learning series by Nagesh
+✍️ Part of the **10 Days of DevOps** learning series by Nagesh
