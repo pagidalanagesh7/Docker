@@ -189,5 +189,114 @@ By the end of this module, you will be able to:
 - Apply networking best practices in production environments
 
 ---
+# 🐳 Docker Learning Series – Day 6: Docker Compose
+
+Welcome to **Day 6** of the Docker Learning Series!
+
+In this module, you'll learn how to define and run multi-container Docker applications using Docker Compose. You'll explore the `docker-compose.yml` file structure, services, networks, volumes, and how Compose simplifies managing multi-container environments compared to running containers individually.
+
+## 📚 Topics Covered
+
+- 📝 What is Docker Compose?
+- ⚙️ Docker Compose YAML Structure
+- 🧩 Services, Networks & Volumes in Compose
+- 🔗 Multi-Container Application Setup
+- 🌍 Environment Variables in Compose
+- 📈 Scaling Services with Compose
+- 🔄 Compose Lifecycle Commands (`up`, `down`, `restart`, `logs`)
+- ✅ Production Best Practices
+- 🎯 Interview Questions & Answers
+
+## 📂 Repository Structure
+
+```
+Day-06-Docker-Compose/
+│
+├── README.md
+└── docker compose.png
+```
+
+## 📄 Repository Files
+
+| File | Description |
+|------|-------------|
+| 📘 README.md | Complete theory, examples, and notes for Docker Compose |
+| 🖼 docker compose.png | High-resolution handwritten infographic |
+
+---
+
+## 🎯 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Understand the purpose and benefits of Docker Compose
+- Write and structure a `docker-compose.yml` file
+- Define multiple services, networks, and volumes in a single file
+- Manage multi-container applications with simple Compose commands
+- Apply Docker Compose best practices in real-world DevOps workflows
+
+---
+
+# 🐳 Docker Learning Series – Day 7: Dockerfile Mastery (Image Optimization)
+
+Welcome to **Day 7** of the Docker Learning Series!
+
+In this module, you'll learn how to write efficient Dockerfiles and optimize Docker images using multi-stage builds, layer caching, `.dockerignore`, and language-specific best practices across Node.js, Python, Java, and Nginx.
+
+## 📚 Topics Covered
+
+- 📝 Dockerfile Instructions Deep Dive
+- 🧱 Docker Image Layers & Caching
+- 🏗️ Multi-Stage Builds
+- 📦 Choosing the Right Base Image (alpine, slim, distroless, scratch)
+- 🚫 `.dockerignore` Best Practices
+- 🔐 Security Best Practices (non-root users, image scanning)
+- 📉 Real-World Image Size Optimization Examples
+- ✅ Production Best Practices
+- 🎯 Interview Questions & Answers
+
+## 📂 Repository Structure
+
+```
+Day-07-Dockerfile-Image-Optimization/
+│
+├── README.md
+├── theory.md
+├── commands.md
+├── examples.md
+├── interview-questions.md
+├── best-practices.md
+└── dockerfiles/
+    ├── nodejs/
+    ├── python/
+    ├── java/
+    └── nginx/
+```
+
+## 📄 Repository Files
+
+| File | Description |
+|------|-------------|
+| 📘 theory.md | Core Dockerfile & image optimization concepts |
+| 💻 commands.md | Build, inspect, and optimize Docker image commands |
+| 🚀 examples.md | Before/after optimization examples with size comparisons |
+| 🎯 interview-questions.md | Scenario-based interview Q&A |
+| ✅ best-practices.md | Quick-reference optimization checklist |
+| 🐳 dockerfiles/ | Optimized multi-stage Dockerfiles for Node.js, Python, Java & Nginx |
+
+---
+
+## 🎯 Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Write clean, efficient, and secure Dockerfiles
+- Apply multi-stage builds to shrink image size significantly
+- Choose the right base image for different use cases
+- Optimize layer caching to speed up builds
+- Apply Docker image optimization best practices in production and CI/CD pipelines
+
+---
+
 
 ⭐ If you find this repository helpful, consider giving it a **Star** and following the series for more Docker and DevOps content.
