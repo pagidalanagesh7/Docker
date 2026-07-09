@@ -24,4 +24,4 @@ can blow way past just "one container."
 
 ## 🔗 Connect
 
-Follow the full 100 Days of DevOps series on GitHub & LinkedIn.
+Follow the full 10 Days of DevOps series on GitHub & LinkedIn.
